@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Engineer Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* VOICE everyday learning guide, calm and dense, for TikTok viewers on phones
+   IDEA a transit route map: three coloured lines (parts), numbered stops (stages)
+   PICTURE the 13-month journey bar: three part segments at true time scale, stops listed, "start applying" markers
+   COLOUR fixed night ground matching the TikTok series; cyan, violet, green mark parts 1-3
+   TYPE Space Grotesk headings + Inter text, same as the infographics
+   LAYOUT header + full-width journey; then sticky stage index left, reading column right; phone: one column */
+:root{color-scheme:dark;--bg:#070b14;--panel:#0e1524;--panel2:#131c2e;--ink:#eef3fb;--muted:#aab6cb;--line:#22304a;--c1:#22d3ee;--c2:#a78bfa;--c3:#34d399}
+:root[data-theme=light],:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
+a{color:var(--c1);text-decoration-color:color-mix(in srgb,var(--c1) 40%,transparent);text-underline-offset:3px}
+a:hover{text-decoration-color:currentColor}
+a:focus-visible{outline:2px solid var(--c1);outline-offset:2px;border-radius:3px}
+img{max-width:100%;display:block}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+header.band{background:radial-gradient(900px 420px at 85% 0%,color-mix(in srgb,var(--c2) 22%,transparent),transparent 70%),radial-gradient(700px 400px at 0% 100%,color-mix(in srgb,var(--c1) 16%,transparent),transparent 70%);border-bottom:1px solid var(--line)}
+.top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;align-items:end}
+h1.title{font:700 clamp(38px,5.5vw,56px)/1.03 'Space Grotesk',sans-serif;letter-spacing:-.025em;margin:0;text-wrap:balance}
+.lede{font-size:18px;color:var(--muted);margin:14px 0 0;max-width:60ch}
+.lede b{color:var(--ink)}
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fig1{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.fig1 strong{display:block;font:700 clamp(20px,2.3vw,28px)/1.1 'Space Grotesk',sans-serif;white-space:nowrap}
+.fig1 span{font-size:14px;color:var(--muted)}
+/* journey */
+.journey{margin-top:34px;position:relative}
+.axis{position:relative;height:22px;margin-bottom:6px;font-size:13px;color:var(--muted)}
+.axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.axis span:first-child{transform:none}
+.lines{display:grid;grid-template-columns:4.5fr 4.5fr 4fr;gap:6px;position:relative}
+.seg{border-radius:14px;overflow:hidden;background:var(--panel);border:1px solid var(--line)}
+.seg .hd{padding:10px 14px;color:#06101c;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.seg .hd b{font:700 19px/1.2 'Space Grotesk',sans-serif}
+.seg .hd small{font-size:14px;font-weight:600;white-space:nowrap}
+.s1 .hd{background:var(--c1)}.s2 .hd{background:var(--c2)}.s3 .hd{background:var(--c3)}
+.seg ol{list-style:none;margin:0;padding:10px 14px 12px;display:grid;gap:3px}
+.seg li a{color:var(--ink);text-decoration:none;font-size:15px;display:flex;gap:8px;align-items:baseline;padding:2px 0}
+.seg li a:hover{color:#fff;text-decoration:underline}
+.seg li i{font-style:normal;font-weight:700;font-size:13px;width:22px;flex:none;font-variant-numeric:tabular-nums}
+.s1 li i{color:var(--c1)}.s2 li i{color:var(--c2)}.s3 li i{color:var(--c3)}
+.mk{position:absolute;top:-34px;height:78px;width:0;border-left:2px dashed #fff8;pointer-events:none}
+.mk span{position:absolute;top:0;left:6px;white-space:nowrap;font-size:13px;font-weight:700;background:#fff;color:#06101c;padding:2px 8px;border-radius:6px}
+.mk.r span{left:auto;right:6px}
+.mklist{display:none;margin:12px 0 0;padding:0;list-style:none;font-size:15px;color:var(--muted)}
+.mklist b{color:var(--ink)}
+/* nav */
+nav.scroll{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:4px;padding:8px max(5vw,16px);overflow-x:auto;scrollbar-width:none}
+nav.scroll a{flex:none;color:var(--muted);text-decoration:none;font-size:15px;font-weight:600;padding:9px 12px;border-radius:8px;min-height:44px;display:flex;align-items:center}
+nav.scroll a:hover{background:var(--panel2);color:var(--ink)}
+/* body layout */
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px;max-width:1240px;margin:0 auto}
+aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;padding-bottom:16px}
+aside p{margin:14px 0 4px;font-weight:700;font-size:14px}
+aside p.a1{color:var(--c1)}aside p.a2{color:var(--c2)}aside p.a3{color:var(--c3)}
+aside a{display:block;color:var(--muted);text-decoration:none;padding:3px 0}
+aside a:hover{color:var(--ink)}
+main{max-width:800px}
+main h2.sec{font:700 clamp(28px,3.4vw,36px)/1.1 'Space Grotesk',sans-serif;letter-spacing:-.02em;margin:64px 0 12px;text-wrap:balance}
+main>h2.sec:first-child{margin-top:8px}
+main h3{font:600 21px/1.25 'Space Grotesk',sans-serif;margin:32px 0 8px}
+h1.part{margin:80px 0 8px;padding:22px 24px;border-radius:18px;color:#06101c;display:grid;gap:2px}
+h1.part.p1{background:var(--c1)}h1.part.p2{background:var(--c2)}h1.part.p3{background:var(--c3)}
+h1.part .pk{font:600 15px/1.2 Inter,sans-serif}
+h1.part .pn{font:700 clamp(30px,4vw,44px)/1.05 'Space Grotesk',sans-serif;letter-spacing:-.02em}
+h1.part .pd{font:600 16px/1.3 Inter,sans-serif}
+h2.stage{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;align-items:center;margin:44px 0 10px;font:700 25px/1.2 'Space Grotesk',sans-serif}
+h2.stage .num{grid-row:span 2;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font:700 18px Inter,sans-serif;border:2.5px solid;font-variant-numeric:tabular-nums}
+h2.stage .dur{font:500 15px/1.4 Inter,sans-serif;color:var(--muted)}
+.c1 .num{color:var(--c1)}.c2 .num{color:var(--c2)}.c3 .num{color:var(--c3)}
+main p,main li{color:#d5deec}
+main strong{color:var(--ink)}
+main ul,main ol{padding-left:22px}
+main li{margin:4px 0}
+main li::marker{color:var(--muted)}
+main a{overflow-wrap:anywhere}
+blockquote{margin:16px 0;padding:12px 16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;color:var(--muted)}
+blockquote p{margin:0}
+hr{border:0;border-top:1px solid var(--line);margin:48px 0}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:14px 0}
+th{text-align:left;font-weight:700;color:var(--ink);border-bottom:1.5px solid #3a4a68;padding:9px 10px;vertical-align:bottom}
+td{border-bottom:1px solid var(--line);padding:9px 10px;vertical-align:top;color:#d5deec}
+tr:hover td{background:#ffffff06}
+.projects table{min-width:980px;font-size:14px}
+code{font-size:.92em;background:var(--panel2);padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
+.gal figure{margin:0}
+.gal img{border-radius:14px;border:1px solid var(--line);aspect-ratio:9/16;object-fit:cover;width:100%}
+.gal figcaption{font-size:14px;color:var(--muted);margin-top:6px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+@media(max-width:1000px){.layout{grid-template-columns:minmax(0,1fr)}aside{display:none}.top{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:720px){.lines{grid-template-columns:minmax(0,1fr)}.mk,.axis{display:none}.mklist{display:grid;gap:4px}.journey{margin-top:24px}}
+@media(max-width:600px){body{font-size:16px}table{font-size:13px}th,td{padding:6px 4px}.gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}.gal figure{flex:0 0 72%;scroll-snap-align:start}.fig1 strong{font-size:24px}}
+</style>
+</head>
+<body>
+<header class="band">
+ <div class="wrap">
+  <div class="top">
+   <div>
+    <h1 class="title">AI Engineer Roadmap</h1>
+    <p class="lede">A practical path from zero to a first AI job: <b>18 stages in 3 parts</b>, 8 portfolio projects, free resources first, and an honest timeline. Written as an answer to a viewer who asked what to study, in what order, and how to make it stick.</p>
+   </div>
+   <div class="figs">
+    <div class="fig1"><strong>12–14 mo</strong><span>from zero, 2–3 h/day</span></div>
+    <div class="fig1"><strong>8–10 mo</strong><span>if you already code</span></div>
+    <div class="fig1"><strong>~month 7</strong><span>first internship applications</span></div>
+   </div>
+  </div>
+
+  <div class="journey" aria-label="Timeline of the three parts">
+   <div class="axis"><span style="left:0">Month 0</span><span style="left:23.08%">3</span><span style="left:46.15%">6</span><span style="left:69.23%">9</span><span style="left:92.31%">12</span></div>
+   <div class="lines">
+    <div class="seg s1"><div class="hd"><b>Foundations</b><small>~4–5 months</small></div><ol>
+     <li><a href="#stage-01"><i>01</i>Python &amp; programming</a></li>
+     <li><a href="#stage-02"><i>02</i>Git &amp; GitHub</a></li>
+     <li><a href="#stage-03"><i>03</i>Math for AI</a></li>
+     <li><a href="#stage-04"><i>04</i>SQL &amp; databases</a></li>
+     <li><a href="#stage-05"><i>05</i>Data analysis &amp; viz</a></li></ol></div>
+    <div class="seg s2"><div class="hd"><b>AI core</b><small>~4–5 months</small></div><ol>
+     <li><a href="#stage-06"><i>06</i>Machine learning</a></li>
+     <li><a href="#stage-07"><i>07</i>Feature engineering</a></li>
+     <li><a href="#stage-08"><i>08</i>Model evaluation</a></li>
+     <li><a href="#stage-09"><i>09</i>Deep learning + PyTorch</a></li>
+     <li><a href="#stage-10"><i>10</i>Computer vision</a></li>
+     <li><a href="#stage-11"><i>11</i>NLP &amp; transformers</a></li></ol></div>
+    <div class="seg s3"><div class="hd"><b>AI engineering</b><small>~3–4 months</small></div><ol>
+     <li><a href="#stage-12"><i>12</i>LLMs &amp; prompting</a></li>
+     <li><a href="#stage-13"><i>13</i>FastAPI + Docker</a></li>
+     <li><a href="#stage-14"><i>14</i>Embeddings &amp; vector DBs</a></li>
+     <li><a href="#stage-15"><i>15</i>RAG</a></li>
+     <li><a href="#stage-16"><i>16</i>AI agents</a></li>
+     <li><a href="#stage-17"><i>17</i>Deploy, cloud &amp; MLOps</a></li>
+     <li><a href="#stage-18"><i>18</i>Portfolio &amp; interviews</a></li></ol></div>
+    <div class="mk r" style="left:57.7%"><span>Apply: internships</span></div>
+    <div class="mk" style="left:80.8%"><span>Apply: junior roles</span></div>
+   </div>
+   <ul class="mklist"><li><b>Internships:</b> start applying after Project #2, around month 7–8.</li><li><b>Junior roles:</b> start applying after Project #6, around month 9–11.</li></ul>
+  </div>
+ </div>
+</header>
+
+<nav class="scroll" aria-label="Sections">
+ <a href="#answer">Short answer</a><a href="#two-jobs">ML vs AI engineer</a><a href="#how-to-study">How to study</a><a href="#part-1">Part 1</a><a href="#part-2">Part 2</a><a href="#part-3">Part 3</a><a href="#projects">Projects</a><a href="#jobs">Job strategy</a><a href="#schedule">Schedule</a><a href="#series">TikTok images</a>
+</nav>
+
+<div class="band">
+ <div class="layout">
+  <aside aria-label="Stage index">
+   <p>Before you start</p><a href="#answer">Short answer</a><a href="#two-jobs">ML vs AI engineer</a><a href="#how-to-study">How to study</a>
+   <p class="a1">Part 1 · Foundations</p><a href="#stage-01">01 Python</a><a href="#stage-02">02 Git &amp; GitHub</a><a href="#stage-03">03 Math</a><a href="#stage-04">04 SQL</a><a href="#stage-05">05 Data analysis</a>
+   <p class="a2">Part 2 · AI core</p><a href="#stage-06">06 Machine learning</a><a href="#stage-07">07 Feature engineering</a><a href="#stage-08">08 Evaluation</a><a href="#stage-09">09 Deep learning</a><a href="#stage-10">10 Computer vision</a><a href="#stage-11">11 NLP &amp; transformers</a>
+   <p class="a3">Part 3 · AI engineering</p><a href="#stage-12">12 LLMs</a><a href="#stage-13">13 FastAPI + Docker</a><a href="#stage-14">14 Embeddings</a><a href="#stage-15">15 RAG</a><a href="#stage-16">16 Agents</a><a href="#stage-17">17 Deploy &amp; MLOps</a><a href="#stage-18">18 Job ready</a>
+   <p>After that</p><a href="#projects">8 projects</a><a href="#jobs">Job strategy</a><a href="#schedule">Weekly schedule</a><a href="#notes">Final notes</a>
+  </aside>
+  <main>
+<h2 class="sec" id="answer">The short answer to the comment</h2>
+<p><strong>"Who should I take a course with?"</strong>
+If you want <em>one</em> paid, structured spine: <strong>Andrew Ng's Machine Learning Specialization → Deep Learning Specialization (Coursera, DeepLearning.AI)</strong>. Coursera offers financial aid, so cost shouldn't stop you. Everything else in this roadmap can be free.
+If you prefer Arabic for the early stages: <strong>Elzero Web School</strong> (Python, Git) and <strong>Hesham Asem</strong> (ML/DL in Arabic) are solid starting points, then switch to the English resources below. The job market works in English.</p>
+<p><strong>"What do I study, in what order?"</strong> → Parts 1 → 2 → 3 below (18 stages, 3 parts).</p>
+<p><strong>"How do I study so it sticks, like pen and paper in college?"</strong> → Section 2. Short version: <strong>pen and paper for math, algorithms and architecture diagrams; your keyboard for everything else; and build something every week.</strong></p>
+<p><strong>How long will it take? (Honest answer)</strong></p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Your starting point</th>
+<th>Study time</th>
+<th>Realistic time to job-ready</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zero programming</td>
+<td>2–3 h/day, 6 days/week</td>
+<td><strong>12–14 months</strong></td>
+</tr>
+<tr>
+<td>Already code (CS student / developer)</td>
+<td>2–3 h/day</td>
+<td><strong>8–10 months</strong></td>
+</tr>
+<tr>
+<td>LLM/AI Engineer fast track (see 1.2)</td>
+<td>2–3 h/day</td>
+<td><strong>8–10 months from zero, 5–7 if you code</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Anyone promising "AI Engineer in 3 months from zero" is selling you something. But you <strong>don't</strong> need to finish the roadmap to start applying — see Section 7.</p>
+<hr />
+<h2 class="sec" id="two-jobs">Two jobs that people confuse</h2>
+<h3 id="11-ml-engineer-vs-ai-llm-engineer">1.1 ML Engineer vs AI (LLM) Engineer</h3>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>Traditional ML Engineer</th>
+<th>Modern AI / LLM Engineer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core work</td>
+<td>Train, evaluate and deploy models on company data (tabular, images, text)</td>
+<td>Build products on top of foundation models (GPT, Claude, Gemini, Llama…)</td>
+</tr>
+<tr>
+<td>Key skills</td>
+<td>Statistics, feature engineering, scikit-learn, PyTorch, training pipelines, MLOps</td>
+<td>LLM APIs, prompting, embeddings, RAG, agents, evals, backend, deployment</td>
+</tr>
+<tr>
+<td>Math depth</td>
+<td>Medium–high</td>
+<td>Medium (must still understand how models work)</td>
+</tr>
+<tr>
+<td>Typical stack</td>
+<td>pandas, scikit-learn, XGBoost, PyTorch, MLflow, Airflow, cloud ML</td>
+<td>Python, FastAPI, vector DBs, LangGraph, Docker, cloud, observability</td>
+</tr>
+<tr>
+<td>Entry-level demand (2026)</td>
+<td>Steady, often asks for a degree/experience</td>
+<td>High, more open to strong portfolios</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Both share Parts 1 and 2.</strong> The fundamentals are what separate you from people who only know how to call an API. Part 3 is where most AI Engineer job postings live in 2026.</p>
+<h3 id="12-which-track-should-you-follow">1.2 Which track should you follow?</h3>
+<ul>
+<li><strong>Full track (recommended):</strong> all 18 stages in order. Gives you both doors.</li>
+<li><strong>LLM fast track (if you need a job ASAP):</strong> Stages 1, 2, 4, 5 (lighter), 3 (only linear algebra intuition + probability basics), 6 + 8 (condensed to ~4 weeks), 9 (~3 weeks, fundamentals only), 11 (transformer concepts, ~2 weeks) → all of Part 3. <strong>Skip 7 and 10 for now</strong> and come back to them after you're hired.</li>
+</ul>
+<h3 id="13-what-to-skip-for-now-seriously">1.3 What to SKIP for now (seriously)</h3>
+<ul>
+<li>Learning TensorFlow <em>and</em> PyTorch → <strong>PyTorch only.</strong></li>
+<li>Every agent framework (CrewAI, AutoGen, LlamaIndex, LangChain, Haystack, smolagents…) → <strong>learn the raw API first, then LangGraph only.</strong></li>
+<li>Every vector DB → <strong>pgvector (Postgres) or Chroma.</strong> Learn one more later if a job needs it.</li>
+<li>Kubernetes, Spark, Airflow, Terraform → after your first job, unless a job posting you target demands them.</li>
+<li>Training LLMs from scratch, RLHF, distributed training → not entry-level work.</li>
+<li>Measure theory, proofs-heavy math, advanced calculus → not needed to get hired.</li>
+<li>Collecting certificates → <strong>projects &gt; certificates</strong>, always.</li>
+<li>R, MATLAB, Julia → no.</li>
+<li>Reinforcement learning, GANs, diffusion internals → optional specializations later.</li>
+</ul>
+<hr />
+<h2 class="sec" id="how-to-study">The learning system (how to study)</h2>
+<h3 id="21-the-five-rules">2.1 The five rules</h3>
+<ol>
+<li><strong>One primary resource per topic.</strong> Pick it from this roadmap, finish it, and only use a second resource when you are stuck. Tool-hopping is the #1 time-waster.</li>
+<li><strong>The 1 : 2 rule against tutorial hell.</strong> For every 1 hour of video/reading, spend 2 hours writing code <em>without</em> the video. After each tutorial: close it, rebuild the thing from a blank file, then change it (new dataset, new feature, new constraint).</li>
+<li><strong>Build from week 1.</strong> Every stage ends with something on GitHub. Projects start small (scripts) and grow.</li>
+<li><strong>20-minute stuck rule.</strong> Stuck? Try alone for 20 minutes (read the error, print things, read the docs). Then search / ask an AI assistant — but ask it to <em>explain</em>, not to write the whole solution. Then re-type the fix yourself.</li>
+<li><strong>Spaced revision.</strong> Revise every topic at +1 day, +1 week, +1 month (Anki or a simple revision list).</li>
+</ol>
+<h3 id="22-theory-vs-coding-ratio">2.2 Theory vs coding ratio</h3>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Theory</th>
+<th>Coding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python, Git, SQL</td>
+<td>20%</td>
+<td>80%</td>
+</tr>
+<tr>
+<td>Math</td>
+<td>50%</td>
+<td>50% (implement formulas in NumPy)</td>
+</tr>
+<tr>
+<td>ML / DL</td>
+<td>35%</td>
+<td>65%</td>
+</tr>
+<tr>
+<td>LLMs, RAG, Agents, Backend, Deployment</td>
+<td>20%</td>
+<td>80%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="23-should-i-use-pen-and-paper-yes-for-the-right-things">2.3 Should I use pen and paper? Yes — for the right things</h3>
+<p><strong>Use paper for:</strong>
+- Math: derivations, matrix shapes, gradients, probability problems. Writing slows you down enough to <em>understand</em>.
+- Algorithms: trace code by hand (draw arrays, pointers, recursion trees).
+- ML concepts: draw the bias–variance curve, confusion matrix, how a decision tree splits, backprop on a tiny network.
+- Architectures: draw RAG pipelines, agent loops, system designs as boxes and arrows.</p>
+<p><strong>Don't use paper for:</strong>
+- Copying syntax or code. You learn syntax by typing it, failing, and fixing it.</p>
+<h3 id="24-how-to-take-notes-a-two-layer-system">2.4 How to take notes (a two-layer system)</h3>
+<ol>
+<li><strong>Paper notebook ("understanding layer")</strong> — one page per concept: the idea in your own words, a diagram, one worked example, and "where it's used".</li>
+<li><strong>Digital learning log ("reference layer")</strong> — a GitHub repo <code>learning-log</code> (Markdown or Obsidian) with: daily summary (5 lines), code snippets you want to reuse, errors you hit and how you fixed them, links. It doubles as public proof that you study consistently.</li>
+</ol>
+<p><strong>The Feynman check:</strong> at the end of each topic, explain it out loud (or on a blank page) as if teaching a friend. If you can't, you don't know it yet. (Bonus: that explanation is a ready-made TikTok/LinkedIn post.)</p>
+<h3 id="25-when-to-start-projects">2.5 When to start projects</h3>
+<ul>
+<li><strong>Week 1:</strong> tiny scripts.</li>
+<li><strong>End of Part 1:</strong> first real portfolio project (data analysis).</li>
+<li><strong>From Part 2 on:</strong> one portfolio project per 1–2 stages (see Section 6).</li>
+<li><strong>Rule:</strong> never more than 3 weeks without pushing something meaningful to GitHub.</li>
+</ul>
+<hr />
+<h1 class="part p1" id="part-1"><span class="pk">Part 1 of 3</span><span class="pn">Foundations</span><span class="pd">~4–5 months from zero</span></h1>
+<h2 class="stage c1" id="stage-01"><span class="num">01</span><span class="st">Programming &amp; Python</span><span class="dur">6–8 weeks; 2–3 if you already code</span></h2>
+<p><strong>Topics</strong>
+- Setup: Python 3.12+, VS Code, terminal basics, virtual environments (<code>venv</code> or <code>uv</code>), <code>pip</code>.
+- Core: variables, types, strings, lists/dicts/sets/tuples, conditionals, loops, functions, scope, <code>*args/**kwargs</code>.
+- Intermediate: comprehensions, file I/O, exceptions, modules &amp; packages, OOP (classes, inheritance, dataclasses), type hints.
+- Professional habits: reading tracebacks, debugging in VS Code, <code>logging</code>, writing small tests with <code>pytest</code>, PEP 8 / formatter (ruff/black).
+- Useful extras: <code>json</code>, <code>pathlib</code>, <code>requests</code>, calling a public API, environment variables.</p>
+<p><strong>Resources</strong>
+- ⭐ <strong>CS50's Introduction to Programming with Python (Harvard, free)</strong> — <a href="https://cs50.harvard.edu/python/" target="_blank" rel="noopener">https://cs50.harvard.edu/python/</a> — <em>David Malan</em> is one of the best teachers on the internet; problem sets force you to code.
+- Official tutorial (reference) — <a href="https://docs.python.org/3/tutorial/" target="_blank" rel="noopener">https://docs.python.org/3/tutorial/</a>
+- <strong>Corey Schafer (YouTube)</strong> — <a href="https://www.youtube.com/@coreyms" target="_blank" rel="noopener">https://www.youtube.com/@coreyms</a> — the clearest explanations of specific Python topics (OOP, logging, venvs).
+- Arabic option: <strong>Elzero Web School</strong> — <a href="https://www.youtube.com/@ElzeroWebSchool" target="_blank" rel="noopener">https://www.youtube.com/@ElzeroWebSchool</a> — complete Python course in Arabic.
+- Practice: <strong>Exercism Python track (free, mentored)</strong> — <a href="https://exercism.org/tracks/python" target="_blank" rel="noopener">https://exercism.org/tracks/python</a></p>
+<p><strong>How to study:</strong> watch one lecture → do its problem set without help → write 3 extra small programs that use the same concepts. Paper only for tracing tricky loops/recursion.</p>
+<p><strong>Assignments</strong>
+- CLI expense tracker (add/list/summarize, saves to JSON/CSV).
+- Weather or currency script that calls a public API and handles errors.
+- Refactor one script into a class-based module with tests.</p>
+<p><strong>Done when:</strong> you can build a 150–300 line program from a blank file without a tutorial, use classes, handle errors, and debug from a traceback.</p>
+<h3 id="parallel-track-dsa-essentials-start-week-4-continue-until-hired">Parallel track — DSA essentials (start week 4, continue until hired)</h3>
+<p>Only what AI jobs actually test: Big-O, arrays &amp; strings, hash maps/sets, two pointers, sliding window, stacks/queues, binary search, recursion, sorting, linked lists (basic), trees &amp; BFS/DFS, heaps, basic graphs. Skip advanced DP/segment trees for now.
+- <strong>NeetCode Roadmap</strong> — <a href="https://neetcode.io/roadmap" target="_blank" rel="noopener">https://neetcode.io/roadmap</a> — free structured list with video solutions. Do "NeetCode 150" easy → medium.
+- <strong>Method:</strong> 3 problems/week. Solve on paper first (draw the data structure), then code, then compare with the official solution and write a 3-line "pattern note".</p>
+<h2 class="stage c1" id="stage-02"><span class="num">02</span><span class="st">Git &amp; GitHub</span><span class="dur">1 week, during Stage 01 weeks 4–5</span></h2>
+<p><strong>Topics:</strong> <code>init / add / commit / log / diff</code>, <code>.gitignore</code>, branches, merge, resolving conflicts, remotes, <code>push / pull</code>, pull requests, README writing in Markdown, GitHub profile README, never committing secrets (<code>.env</code>).</p>
+<p><strong>Resources</strong>
+- <strong>Learn Git Branching (interactive, free)</strong> — <a href="https://learngitbranching.js.org/" target="_blank" rel="noopener">https://learngitbranching.js.org/</a>
+- <strong>Pro Git book (free)</strong> — <a href="https://git-scm.com/book/en/v2" target="_blank" rel="noopener">https://git-scm.com/book/en/v2</a> — chapters 1–3.
+- <strong>MIT "The Missing Semester"</strong> — <a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener">https://missing.csail.mit.edu/</a> — shell, Git, debugging; fills the gaps universities skip.</p>
+<p><strong>Assignments:</strong> put every Stage 01 project on GitHub with a proper README; create a <code>learning-log</code> repo; open a PR to your own repo from a branch and merge it.</p>
+<p><strong>Done when:</strong> you commit daily without thinking, can branch/merge/resolve a conflict, and your GitHub has 3+ repos with READMEs.</p>
+<h2 class="stage c1" id="stage-03"><span class="num">03</span><span class="st">Mathematics for AI</span><span class="dur">5–6 weeks, then "just-in-time"</span></h2>
+<p><strong>Topics</strong>
+- <strong>Linear algebra:</strong> vectors, dot product, matrices, matrix multiplication &amp; shapes, transpose, inverse (concept), linear transformations, eigenvectors (intuition), norms, cosine similarity (you'll use it for embeddings).
+- <strong>Calculus:</strong> derivatives, chain rule, partial derivatives, gradients, gradient descent.
+- <strong>Probability &amp; statistics:</strong> random variables, distributions (normal, binomial), mean/variance, conditional probability, Bayes' rule, expectation, sampling, hypothesis testing &amp; p-values (concept), correlation vs causation, maximum likelihood (intuition).</p>
+<p><strong>Resources</strong>
+- ⭐ <strong>3Blue1Brown — Essence of Linear Algebra</strong> — <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank" rel="noopener">https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab</a> and <strong>Essence of Calculus</strong> — <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr" target="_blank" rel="noopener">https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr</a> — <em>Grant Sanderson</em> builds visual intuition nobody else does.
+- ⭐ <strong>Mathematics for Machine Learning and Data Science Specialization (DeepLearning.AI, Luis Serrano)</strong> — <a href="https://www.coursera.org/specializations/mathematics-for-machine-learning-and-data-science" target="_blank" rel="noopener">https://www.coursera.org/specializations/mathematics-for-machine-learning-and-data-science</a> — math taught exactly at the level ML needs, with Python labs.
+- <strong>Khan Academy Statistics &amp; Probability (free)</strong> — <a href="https://www.khanacademy.org/math/statistics-probability" target="_blank" rel="noopener">https://www.khanacademy.org/math/statistics-probability</a>
+- <strong>StatQuest (Josh Starmer)</strong> — <a href="https://www.youtube.com/@statquest" target="_blank" rel="noopener">https://www.youtube.com/@statquest</a> — stats and ML concepts explained simply.
+- Reference book (free PDF): <strong>Mathematics for Machine Learning</strong> — <a href="https://mml-book.github.io/" target="_blank" rel="noopener">https://mml-book.github.io/</a> — use it as a reference, not cover-to-cover.</p>
+<p><strong>How to study:</strong> this is the <strong>pen-and-paper stage.</strong> Watch → pause → reproduce the derivation on paper → solve 5 problems by hand → verify with NumPy. Example: compute a 3×3 matrix product by hand, then check with <code>np.dot</code>.</p>
+<p><strong>Assignments</strong>
+- Implement in NumPy: dot product, cosine similarity, matrix multiply (loops vs vectorized), mean/variance/std.
+- Implement linear regression with gradient descent from scratch; plot the loss going down.
+- Simulate coin flips/dice to see the law of large numbers and the central limit theorem.</p>
+<p><strong>Done when:</strong> you can explain gradient descent with a drawing, compute shapes of matrix products instantly, explain Bayes' rule with an example, and implement linear regression from scratch.</p>
+<blockquote>
+<p>Don't stay here forever. Go deeper "just-in-time" when a later topic needs it.</p>
+</blockquote>
+<h2 class="stage c1" id="stage-04"><span class="num">04</span><span class="st">SQL &amp; Databases</span><span class="dur">2–3 weeks</span></h2>
+<p><strong>Topics:</strong> relational model, <code>SELECT / WHERE / ORDER BY / LIMIT</code>, aggregates &amp; <code>GROUP BY / HAVING</code>, all JOIN types, subqueries, CTEs (<code>WITH</code>), window functions (<code>ROW_NUMBER</code>, <code>RANK</code>, <code>LAG</code>, running totals), <code>CREATE / INSERT / UPDATE</code>, primary/foreign keys, indexes (concept), normalization basics, querying Postgres/SQLite from Python.</p>
+<p><strong>Resources</strong>
+- <strong>SQLBolt (interactive, free)</strong> — <a href="https://sqlbolt.com/" target="_blank" rel="noopener">https://sqlbolt.com/</a>
+- <strong>Kaggle Learn: Intro to SQL</strong> — <a href="https://www.kaggle.com/learn/intro-to-sql" target="_blank" rel="noopener">https://www.kaggle.com/learn/intro-to-sql</a>
+- <strong>PostgreSQL official tutorial</strong> — <a href="https://www.postgresql.org/docs/current/tutorial.html" target="_blank" rel="noopener">https://www.postgresql.org/docs/current/tutorial.html</a>
+- <strong>LeetCode "SQL 50" study plan</strong> — <a href="https://leetcode.com/studyplan/top-sql-50/" target="_blank" rel="noopener">https://leetcode.com/studyplan/top-sql-50/</a> — interview-style practice.</p>
+<p><strong>Assignments:</strong> install PostgreSQL, load a real dataset (e.g., the Olist e-commerce dataset on Kaggle), answer 20 business questions (top customers, monthly revenue, retention by cohort) with window functions; finish SQL 50.</p>
+<p><strong>Done when:</strong> you can write multi-JOIN queries with CTEs and window functions without looking anything up, and connect to a DB from Python.</p>
+<h2 class="stage c1" id="stage-05"><span class="num">05</span><span class="st">Data Analysis &amp; Visualization</span><span class="dur">3–4 weeks</span></h2>
+<p><strong>Topics</strong>
+- <strong>NumPy:</strong> arrays, broadcasting, vectorization, indexing.
+- <strong>pandas:</strong> Series/DataFrame, reading CSV/SQL, selection, filtering, <code>groupby</code>, merge/join, pivot, handling missing values, dtypes, datetime, string ops, <code>apply</code> vs vectorization.
+- <strong>EDA:</strong> distributions, outliers, correlations, asking questions of data.
+- <strong>Visualization:</strong> Matplotlib (fundamentals), Seaborn (statistical plots), choosing the right chart, labeling honestly.
+- <strong>Jupyter:</strong> notebooks for exploration; move reusable code into <code>.py</code> files.</p>
+<p><strong>Resources</strong>
+- ⭐ <strong>Python for Data Analysis, 3rd ed. (Wes McKinney — the creator of pandas), free online</strong> — <a href="https://wesmckinney.com/book/" target="_blank" rel="noopener">https://wesmckinney.com/book/</a>
+- <strong>Kaggle Learn: Pandas</strong> — <a href="https://www.kaggle.com/learn/pandas" target="_blank" rel="noopener">https://www.kaggle.com/learn/pandas</a> and <strong>Data Visualization</strong> — <a href="https://www.kaggle.com/learn/data-visualization" target="_blank" rel="noopener">https://www.kaggle.com/learn/data-visualization</a>
+- pandas user guide — <a href="https://pandas.pydata.org/docs/user_guide/index.html" target="_blank" rel="noopener">https://pandas.pydata.org/docs/user_guide/index.html</a> · Seaborn tutorial — <a href="https://seaborn.pydata.org/tutorial.html" target="_blank" rel="noopener">https://seaborn.pydata.org/tutorial.html</a></p>
+<p><strong>How to study:</strong> notebooks. For every function you learn, try it on your own dataset immediately. Write a markdown cell with your conclusion after every chart ("what does this show?").</p>
+<p><strong>Assignment → Portfolio Project #1</strong> (see Section 6).</p>
+<p><strong>Done when:</strong> given an unknown CSV, you can clean it, explore it, and produce a clear 8–10 chart story in under a day.</p>
+<hr />
+<h1 class="part p2" id="part-2"><span class="pk">Part 2 of 3</span><span class="pn">AI Core</span><span class="pd">~4–5 months</span></h1>
+<h2 class="stage c2" id="stage-06"><span class="num">06</span><span class="st">Machine Learning with scikit-learn</span><span class="dur">5–6 weeks</span></h2>
+<p><strong>Topics</strong>
+- ML framing: supervised vs unsupervised, regression vs classification, train/validation/test, baseline models.
+- Algorithms (know intuition + when to use): linear &amp; logistic regression, regularization (L1/L2), k-NN, decision trees, random forests, gradient boosting (XGBoost / LightGBM), SVM (concept), naive Bayes, k-means, PCA.
+- Core theory: loss functions, gradient descent, overfitting/underfitting, bias–variance trade-off.
+- scikit-learn API: <code>fit / predict / transform</code>, <code>Pipeline</code>, <code>ColumnTransformer</code>, <code>GridSearchCV / RandomizedSearchCV</code>, saving models with <code>joblib</code>.</p>
+<p><strong>Resources</strong>
+- ⭐ <strong>Machine Learning Specialization — Andrew Ng (Coursera/DeepLearning.AI)</strong> — <a href="https://www.coursera.org/specializations/machine-learning-introduction" target="_blank" rel="noopener">https://www.coursera.org/specializations/machine-learning-introduction</a> — <em>Andrew Ng</em> is the reference teacher for ML intuition; financial aid available.
+- ⭐ Free alternative: <strong>Hands-On Machine Learning (Aurélien Géron) — notebooks free</strong> — <a href="https://github.com/ageron/handson-ml3" target="_blank" rel="noopener">https://github.com/ageron/handson-ml3</a> — Part I (classic ML) is the best practical ML text. (The book itself is paid; a newer Scikit-Learn &amp; PyTorch edition also exists.)
+- <strong>An Introduction to Statistical Learning with Python (ISLP), free PDF</strong> — <a href="https://www.statlearning.com/" target="_blank" rel="noopener">https://www.statlearning.com/</a> — deeper "why".
+- <strong>StatQuest</strong> — <a href="https://www.youtube.com/@statquest" target="_blank" rel="noopener">https://www.youtube.com/@statquest</a> — when an algorithm doesn't click.
+- <strong>scikit-learn User Guide</strong> — <a href="https://scikit-learn.org/stable/user_guide.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/user_guide.html</a>
+- <strong>DataTalksClub ML Zoomcamp (free, includes deployment)</strong> — <a href="https://github.com/DataTalksClub/machine-learning-zoomcamp" target="_blank" rel="noopener">https://github.com/DataTalksClub/machine-learning-zoomcamp</a>
+- Arabic: <strong>Hesham Asem</strong> — <a href="https://www.youtube.com/@HeshamAsem" target="_blank" rel="noopener">https://www.youtube.com/@HeshamAsem</a></p>
+<p><strong>How to study:</strong> for each algorithm: (1) paper — draw how it works on a toy example, (2) implement the simplest version from scratch in NumPy (linear/logistic regression, k-NN, k-means), (3) use the scikit-learn version on a real dataset, (4) one-page note: how it works, key hyperparameters, pros/cons, when to use.</p>
+<p><strong>Assignments:</strong> from-scratch logistic regression; compare 5 models on one dataset with a proper validation setup; enter one Kaggle Playground competition — <a href="https://www.kaggle.com/competitions" target="_blank" rel="noopener">https://www.kaggle.com/competitions</a></p>
+<p><strong>Done when:</strong> you can take a tabular dataset to a tuned, validated model inside a <code>Pipeline</code>, and explain <em>why</em> you chose that model.</p>
+<h2 class="stage c2" id="stage-07"><span class="num">07</span><span class="st">Feature Engineering</span><span class="dur">2 weeks, overlapping with 06 and 08</span></h2>
+<p><strong>Topics:</strong> missing-value strategies, encoding (one-hot, ordinal, target encoding &amp; its leakage risk), scaling, log transforms, binning, date/time features, text features (TF-IDF), interaction features, feature selection, handling imbalanced data (class weights, resampling), <strong>data leakage</strong> (the #1 junior mistake).</p>
+<p><strong>Resources:</strong> <strong>Kaggle Learn: Feature Engineering</strong> — <a href="https://www.kaggle.com/learn/feature-engineering" target="_blank" rel="noopener">https://www.kaggle.com/learn/feature-engineering</a> · <strong>Kaggle Learn: Intermediate ML</strong> — <a href="https://www.kaggle.com/learn/intermediate-machine-learning" target="_blank" rel="noopener">https://www.kaggle.com/learn/intermediate-machine-learning</a> · Géron ch. 2.</p>
+<p><strong>Assignment:</strong> take your Stage 06 model and improve it <em>only</em> through features; log every experiment (feature, CV score) in a table.</p>
+<p><strong>Done when:</strong> you can explain leakage with an example and get a measurable improvement from features alone.</p>
+<h2 class="stage c2" id="stage-08"><span class="num">08</span><span class="st">Model Evaluation &amp; Validation</span><span class="dur">2 weeks, overlapping</span></h2>
+<p><strong>Topics:</strong> train/val/test discipline, k-fold &amp; stratified CV, time-series splits, metrics — regression (MAE, RMSE, R²) and classification (accuracy, precision, recall, F1, ROC-AUC, PR-AUC, log loss), confusion matrix, threshold tuning, calibration, learning curves, error analysis, interpretability (feature importance, SHAP), choosing a metric that matches the business cost.</p>
+<p><strong>Resources:</strong> scikit-learn "Model selection and evaluation" section of the User Guide · <strong>Google ML Crash Course</strong> — <a href="https://developers.google.com/machine-learning/crash-course" target="_blank" rel="noopener">https://developers.google.com/machine-learning/crash-course</a> · StatQuest videos on ROC/AUC and cross-validation.</p>
+<p><strong>Assignment → Portfolio Project #2</strong> (churn predictor, Section 6).</p>
+<p><strong>Done when:</strong> you can defend your evaluation choices in an interview ("why recall and not accuracy here?").</p>
+<h2 class="stage c2" id="stage-09"><span class="num">09</span><span class="st">Deep Learning &amp; PyTorch</span><span class="dur">5–6 weeks</span></h2>
+<p><strong>Topics</strong>
+- Neurons, layers, activations, forward pass, loss, <strong>backpropagation</strong> (on paper for a tiny net), optimizers (SGD, Adam), learning rate, batch size, initialization, regularization (dropout, weight decay), batch/layer norm, overfitting in DL.
+- <strong>PyTorch:</strong> tensors, autograd, <code>nn.Module</code>, <code>Dataset</code> / <code>DataLoader</code>, the training loop, evaluation loop, GPU usage (Google Colab / Kaggle free GPUs), saving/loading, reproducibility (seeds).
+- Experiment hygiene: track runs (a CSV or MLflow), change one thing at a time.</p>
+<p><strong>Resources</strong>
+- ⭐ <strong>Andrej Karpathy — Neural Networks: Zero to Hero (free)</strong> — <a href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener">https://karpathy.ai/zero-to-hero.html</a> — builds backprop (micrograd) and language models from scratch; the best way to <em>really</em> understand DL.
+- ⭐ <strong>3Blue1Brown — Neural Networks</strong> — <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi" target="_blank" rel="noopener">https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi</a>
+- <strong>Learn PyTorch for Deep Learning (Daniel Bourke, free book + videos)</strong> — <a href="https://www.learnpytorch.io/" target="_blank" rel="noopener">https://www.learnpytorch.io/</a>
+- <strong>Official PyTorch tutorials</strong> — <a href="https://docs.pytorch.org/tutorials/" target="_blank" rel="noopener">https://docs.pytorch.org/tutorials/</a>
+- Paid structured option: <strong>Deep Learning Specialization (Andrew Ng)</strong> — <a href="https://www.coursera.org/specializations/deep-learning" target="_blank" rel="noopener">https://www.coursera.org/specializations/deep-learning</a>
+- Top-down alternative: <strong>fast.ai Practical Deep Learning (Jeremy Howard, free)</strong> — <a href="https://course.fast.ai/" target="_blank" rel="noopener">https://course.fast.ai/</a>
+- Reference: <strong>Dive into Deep Learning (free)</strong> — <a href="https://d2l.ai/" target="_blank" rel="noopener">https://d2l.ai/</a></p>
+<p><strong>How to study:</strong> paper for backprop and tensor shapes (write the shape next to every line of your model). Re-implement Karpathy's micrograd without watching. Then write the PyTorch training loop from memory until you can do it in 10 minutes.</p>
+<p><strong>Assignments:</strong> MLP on Fashion-MNIST written from scratch in PyTorch; experiment table (learning rate, batch size, dropout); reproduce one plot of overfitting vs. regularization.</p>
+<p><strong>Done when:</strong> you can write a full train/eval loop from memory, debug shape errors, and explain backprop on a 2-layer net.</p>
+<h2 class="stage c2" id="stage-10"><span class="num">10</span><span class="st">Computer Vision</span><span class="dur">2–3 weeks; deeper only if you specialize</span></h2>
+<p><strong>Topics:</strong> images as tensors, convolutions, pooling, CNN architectures (LeNet → ResNet intuition), data augmentation, <strong>transfer learning / fine-tuning</strong>, object detection &amp; segmentation concepts, Vision Transformers (concept), using pre-trained models (torchvision, Ultralytics YOLO).</p>
+<p><strong>Resources:</strong> <strong>Stanford CS231n notes &amp; lectures</strong> — <a href="https://cs231n.stanford.edu/" target="_blank" rel="noopener">https://cs231n.stanford.edu/</a> · <strong>torchvision docs</strong> — <a href="https://docs.pytorch.org/vision/stable/index.html" target="_blank" rel="noopener">https://docs.pytorch.org/vision/stable/index.html</a> · <strong>Ultralytics docs (YOLO)</strong> — <a href="https://docs.ultralytics.com/" target="_blank" rel="noopener">https://docs.ultralytics.com/</a> · learnpytorch.io chapters on CNNs and transfer learning.</p>
+<p><strong>Assignment → Portfolio Project #3.</strong></p>
+<p><strong>Done when:</strong> you can fine-tune a pre-trained model on a custom dataset and do error analysis on what it gets wrong.</p>
+<blockquote>
+<p><strong>Optional specialization</strong> (later): detection/segmentation, OCR, video, edge deployment.</p>
+</blockquote>
+<h2 class="stage c2" id="stage-11"><span class="num">11</span><span class="st">NLP &amp; Transformers</span><span class="dur">4 weeks</span></h2>
+<p><strong>Topics</strong>
+- Classic NLP: tokenization, text cleaning, bag-of-words, TF-IDF, baseline text classifiers.
+- Word embeddings (word2vec idea), sequence models (RNN/LSTM — concept only).
+- <strong>Transformers:</strong> attention, self-attention, multi-head attention, positional encoding, encoder vs decoder vs encoder–decoder, tokenizers (BPE), pre-training vs fine-tuning, BERT vs GPT families.
+- <strong>Hugging Face:</strong> <code>transformers</code>, <code>datasets</code>, <code>pipeline</code>, <code>AutoTokenizer/AutoModel</code>, <code>Trainer</code>, the Hub.</p>
+<p><strong>Resources</strong>
+- ⭐ <strong>Hugging Face LLM Course (free)</strong> — <a href="https://huggingface.co/learn/llm-course" target="_blank" rel="noopener">https://huggingface.co/learn/llm-course</a>
+- ⭐ <strong>The Illustrated Transformer (Jay Alammar)</strong> — <a href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">https://jalammar.github.io/illustrated-transformer/</a> and <strong>The Illustrated GPT-2</strong> — <a href="https://jalammar.github.io/illustrated-gpt2/" target="_blank" rel="noopener">https://jalammar.github.io/illustrated-gpt2/</a>
+- ⭐ <strong>Karpathy — "Let's build GPT"</strong> (in Zero to Hero) — <a href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener">https://karpathy.ai/zero-to-hero.html</a>
+- <strong>Build a Large Language Model (From Scratch) — Sebastian Raschka, free code</strong> — <a href="https://github.com/rasbt/LLMs-from-scratch" target="_blank" rel="noopener">https://github.com/rasbt/LLMs-from-scratch</a>
+- Deeper (optional): <strong>Stanford CS224n</strong> — <a href="https://web.stanford.edu/class/cs224n/" target="_blank" rel="noopener">https://web.stanford.edu/class/cs224n/</a>
+- Hugging Face Transformers docs — <a href="https://huggingface.co/docs/transformers/index" target="_blank" rel="noopener">https://huggingface.co/docs/transformers/index</a></p>
+<p><strong>How to study:</strong> draw the attention computation on paper with 3 tokens (Q, K, V matrices and shapes). Code a tiny self-attention in PyTorch. Then use Hugging Face for the real work.</p>
+<p><strong>Assignment → Portfolio Project #4</strong> (Arabic NLP).</p>
+<p><strong>Done when:</strong> you can explain self-attention on a whiteboard, and fine-tune + evaluate a transformer on a text classification task.</p>
+<hr />
+<h1 class="part p3" id="part-3"><span class="pk">Part 3 of 3</span><span class="pn">AI Engineering &amp; Job Ready</span><span class="pd">~3–4 months</span></h1>
+<blockquote>
+<p><strong>Order note:</strong> you'll put a <em>minimal</em> FastAPI endpoint in front of a model as early as Project #2. Stage 13 is where you learn backend properly — before RAG and agents, because every Part 3 project is a real API, not a notebook.</p>
+</blockquote>
+<h2 class="stage c3" id="stage-12"><span class="num">12</span><span class="st">LLMs &amp; Prompt Engineering</span><span class="dur">2 weeks</span></h2>
+<p><strong>Topics:</strong> how LLMs work at a high level (next-token prediction, context window, tokens, temperature/top-p), model families &amp; choosing a model (quality vs latency vs cost), using provider APIs (OpenAI, Anthropic, Google) and open models locally (Ollama), messages/roles, system prompts, few-shot, chain-of-thought / reasoning models, <strong>structured outputs</strong> (JSON, Pydantic), <strong>tool/function calling</strong>, streaming, token &amp; cost estimation, hallucinations, prompt injection basics, <strong>evals</strong> (build a small test set and score outputs), when to fine-tune vs prompt vs RAG (LoRA concept).</p>
+<p><strong>Resources</strong>
+- <strong>Anthropic prompt engineering guide</strong> — <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener">https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview</a>
+- <strong>OpenAI prompt engineering guide</strong> — <a href="https://developers.openai.com/api/docs/guides/prompt-engineering" target="_blank" rel="noopener">https://developers.openai.com/api/docs/guides/prompt-engineering</a>
+- <strong>DeepLearning.AI short courses (free, 1–2 h each)</strong> — <a href="https://www.deeplearning.ai/courses" target="_blank" rel="noopener">https://www.deeplearning.ai/courses</a> — pick only the ones that match the current stage.
+- <strong>Ollama (run open models locally)</strong> — <a href="https://ollama.com/" target="_blank" rel="noopener">https://ollama.com/</a>
+- ⭐ Book (paid, worth it): <strong>AI Engineering — Chip Huyen (O'Reilly, 2025)</strong> — <a href="https://huyenchip.com/books/" target="_blank" rel="noopener">https://huyenchip.com/books/</a> — the best single book on building with foundation models: evals, RAG, agents, fine-tuning, inference.
+- <strong>Hamel Husain on evals</strong> — <a href="https://hamel.dev/blog/posts/evals/" target="_blank" rel="noopener">https://hamel.dev/blog/posts/evals/</a></p>
+<p><strong>Assignment → Portfolio Project #5</strong> (structured extraction service).</p>
+<p><strong>Done when:</strong> you can call an LLM with structured output + tool calling, measure quality on a 30–50 example eval set, and estimate cost per request.</p>
+<h2 class="stage c3" id="stage-13"><span class="num">13</span><span class="st">APIs &amp; Backend with FastAPI + Docker basics</span><span class="dur">3 weeks</span></h2>
+<p><strong>Topics:</strong> HTTP, REST, JSON, status codes; FastAPI routes, path/query/body params, <strong>Pydantic</strong> models &amp; validation, dependency injection, async basics, background tasks, streaming responses (SSE), error handling, auth basics (API keys/JWT concept), connecting to Postgres (SQLAlchemy/SQLModel), environment config, testing with <code>pytest</code> + <code>TestClient</code>, rate limiting &amp; retries for LLM calls. <strong>Docker:</strong> images vs containers, Dockerfile, layers &amp; caching, <code>docker compose</code> (API + Postgres), volumes, env vars.</p>
+<p><strong>Resources</strong>
+- ⭐ <strong>FastAPI official tutorial</strong> — <a href="https://fastapi.tiangolo.com/tutorial/" target="_blank" rel="noopener">https://fastapi.tiangolo.com/tutorial/</a> — one of the best docs in Python; follow it in order.
+- <strong>Pydantic docs</strong> — <a href="https://docs.pydantic.dev/" target="_blank" rel="noopener">https://docs.pydantic.dev/</a>
+- <strong>Docker docs — Get started</strong> — <a href="https://docs.docker.com/get-started/" target="_blank" rel="noopener">https://docs.docker.com/get-started/</a>
+- <strong>TechWorld with Nana (YouTube)</strong> — <a href="https://www.youtube.com/@TechWorldwithNana" target="_blank" rel="noopener">https://www.youtube.com/@TechWorldwithNana</a> — clear Docker/DevOps explanations.
+- <strong>Hussein Nasser (YouTube)</strong> — <a href="https://www.youtube.com/@hnasr" target="_blank" rel="noopener">https://www.youtube.com/@hnasr</a> — backend fundamentals explained deeply.</p>
+<p><strong>Assignment:</strong> wrap Project #5 in FastAPI + Postgres + <code>docker compose</code>, with tests and a <code>/health</code> endpoint.</p>
+<p><strong>Done when:</strong> <code>docker compose up</code> starts your whole app on any machine, and you have tests for your endpoints.</p>
+<h2 class="stage c3" id="stage-14"><span class="num">14</span><span class="st">Embeddings &amp; Vector Databases</span><span class="dur">2 weeks</span></h2>
+<p><strong>Topics:</strong> what embeddings are, embedding models (API vs open-source via Sentence-Transformers), cosine similarity, chunking strategies, metadata, vector indexes (HNSW concept), approximate nearest neighbor search, <strong>hybrid search (BM25 + vectors)</strong>, reranking (cross-encoders), multilingual/Arabic embeddings.</p>
+<p><strong>Resources:</strong> <strong>Sentence-Transformers docs</strong> — <a href="https://sbert.net/" target="_blank" rel="noopener">https://sbert.net/</a> · <strong>pgvector</strong> — <a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener">https://github.com/pgvector/pgvector</a> (recommended: one DB for app data + vectors) · <strong>Chroma</strong> (easiest local) — <a href="https://docs.trychroma.com/" target="_blank" rel="noopener">https://docs.trychroma.com/</a> · <strong>Qdrant docs</strong> (optional dedicated vector DB) — <a href="https://qdrant.tech/documentation/" target="_blank" rel="noopener">https://qdrant.tech/documentation/</a></p>
+<p><strong>Assignment:</strong> semantic search over 1,000+ documents; compare 2 embedding models and 2 chunk sizes using recall@k on 30 hand-labeled queries.</p>
+<p><strong>Done when:</strong> you can explain why your search returns what it returns and improve it with numbers.</p>
+<h2 class="stage c3" id="stage-15"><span class="num">15</span><span class="st">RAG: Retrieval-Augmented Generation</span><span class="dur">2–3 weeks</span></h2>
+<p><strong>Topics:</strong> the RAG pipeline (ingest → chunk → embed → store → retrieve → rerank → generate), document parsing (PDF/HTML), citations, query rewriting, hybrid retrieval, reranking, context assembly, handling "I don't know", <strong>RAG evaluation</strong> (retrieval metrics: recall@k, MRR; generation: faithfulness, answer relevance), golden datasets, LLM-as-judge (and its pitfalls), latency &amp; cost optimization, caching, guardrails &amp; prompt-injection defense.</p>
+<p><strong>Resources:</strong> ⭐ <strong>DataTalksClub LLM Zoomcamp (free)</strong> — <a href="https://github.com/DataTalksClub/llm-zoomcamp" target="_blank" rel="noopener">https://github.com/DataTalksClub/llm-zoomcamp</a> — end-to-end RAG with evaluation and monitoring · <strong>RAGAS docs</strong> — <a href="https://docs.ragas.io/" target="_blank" rel="noopener">https://docs.ragas.io/</a> · Chip Huyen, <em>AI Engineering</em>, RAG chapter · DeepLearning.AI short courses on RAG.</p>
+<p><strong>Assignment → Portfolio Project #6</strong> (bilingual RAG assistant).</p>
+<p><strong>Done when:</strong> your RAG system has an eval set, measured retrieval &amp; answer quality, citations, and you can show a before/after improvement.</p>
+<h2 class="stage c3" id="stage-16"><span class="num">16</span><span class="st">AI Agents</span><span class="dur">3 weeks</span></h2>
+<p><strong>Topics:</strong> workflows vs agents (most production "agents" are workflows), tool calling loops, planning, memory (short/long term), state machines/graphs, human-in-the-loop, error recovery, guardrails, cost/step limits, multi-agent (only when needed), <strong>MCP (Model Context Protocol)</strong> for connecting tools, tracing &amp; observability, agent evaluation.</p>
+<p><strong>Resources</strong>
+- ⭐ <strong>"Building Effective Agents" (Anthropic)</strong> — <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">https://www.anthropic.com/engineering/building-effective-agents</a> — read this <em>before</em> any framework.
+- <strong>Hugging Face AI Agents Course (free)</strong> — <a href="https://huggingface.co/learn/agents-course" target="_blank" rel="noopener">https://huggingface.co/learn/agents-course</a>
+- <strong>LangGraph docs</strong> — <a href="https://docs.langchain.com/oss/python/langgraph/overview" target="_blank" rel="noopener">https://docs.langchain.com/oss/python/langgraph/overview</a> and <strong>LangChain Academy (free LangGraph course)</strong> — <a href="https://academy.langchain.com/" target="_blank" rel="noopener">https://academy.langchain.com/</a>
+- <strong>Model Context Protocol</strong> — <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">https://modelcontextprotocol.io/</a></p>
+<p><strong>How to study:</strong> first build a tool-calling agent with the raw provider SDK (~100 lines). Only then rebuild it in LangGraph and note what the framework gives you. Draw every agent as a state diagram on paper before coding.</p>
+<p><strong>Assignment → Portfolio Project #7</strong> (text-to-SQL analyst agent).</p>
+<p><strong>Done when:</strong> you can build an agent with tools, state, human approval for risky actions, step limits, traces, and an eval set of tasks.</p>
+<h2 class="stage c3" id="stage-17"><span class="num">17</span><span class="st">Deployment, Cloud &amp; MLOps fundamentals</span><span class="dur">3 weeks</span></h2>
+<p><strong>Topics</strong>
+- <strong>Deployment:</strong> Hugging Face Spaces / Render for demos; a container on a cloud service (AWS App Runner/ECS, GCP Cloud Run, or Azure Container Apps — <strong>pick one cloud</strong>).
+- <strong>Cloud fundamentals:</strong> compute, storage (S3-style), IAM &amp; secrets, networking basics, billing alerts (set one on day 1!), managed databases.
+- <strong>CI/CD:</strong> GitHub Actions — lint, test, build Docker image, deploy.
+- <strong>MLOps:</strong> experiment tracking &amp; model registry (MLflow), reproducible training, data/model versioning (concept), model serving, monitoring (latency, errors, data drift), retraining triggers.
+- <strong>LLMOps:</strong> prompt/version management, tracing, eval-in-CI (fail the build if quality drops), cost monitoring.</p>
+<p><strong>Resources:</strong> ⭐ <strong>Made With ML (Goku Mohandas, free)</strong> — <a href="https://madewithml.com/" target="_blank" rel="noopener">https://madewithml.com/</a> — production ML done properly · <strong>DataTalksClub MLOps Zoomcamp (free)</strong> — <a href="https://github.com/DataTalksClub/mlops-zoomcamp" target="_blank" rel="noopener">https://github.com/DataTalksClub/mlops-zoomcamp</a> · <strong>MLflow docs</strong> — <a href="https://mlflow.org/docs/latest/" target="_blank" rel="noopener">https://mlflow.org/docs/latest/</a> · <strong>GitHub Actions docs</strong> — <a href="https://docs.github.com/en/actions" target="_blank" rel="noopener">https://docs.github.com/en/actions</a> · <strong>Hugging Face Spaces</strong> — <a href="https://huggingface.co/docs/hub/spaces" target="_blank" rel="noopener">https://huggingface.co/docs/hub/spaces</a> · AWS Cloud Practitioner learning path (optional cert, fundamentals) — <a href="https://aws.amazon.com/training/learn-about/cloud-practitioner/" target="_blank" rel="noopener">https://aws.amazon.com/training/learn-about/cloud-practitioner/</a></p>
+<p><strong>Assignment → Portfolio Project #8</strong> (production capstone).</p>
+<p><strong>Done when:</strong> a <code>git push</code> runs tests + evals and deploys your app to a public URL, and you can see logs, latency and cost.</p>
+<h2 class="stage c3" id="stage-18"><span class="num">18</span><span class="st">Portfolio, CV, GitHub &amp; Interviews</span><span class="dur">focused 3–4 weeks, then ongoing</span></h2>
+<p>Covered in detail in Sections 6 and 7. Interview resources:
+- <strong>NeetCode Roadmap (coding)</strong> — <a href="https://neetcode.io/roadmap" target="_blank" rel="noopener">https://neetcode.io/roadmap</a>
+- <strong>Machine Learning Interviews book — Chip Huyen (free)</strong> — <a href="https://huyenchip.com/ml-interviews-book/" target="_blank" rel="noopener">https://huyenchip.com/ml-interviews-book/</a>
+- <strong>Tech Interview Handbook — Resume guide</strong> — <a href="https://www.techinterviewhandbook.org/resume/" target="_blank" rel="noopener">https://www.techinterviewhandbook.org/resume/</a>
+- <strong>GitHub profile README guide</strong> — <a href="https://docs.github.com/en/account-and-profile/how-tos/profile-customization/managing-your-profile-readme" target="_blank" rel="noopener">https://docs.github.com/en/account-and-profile/how-tos/profile-customization/managing-your-profile-readme</a></p>
+<hr />
+<h2 class="sec" id="projects">Project strategy — 8 strong projects, not 40 weak ones</h2>
+<p>Each project lives in its own repo with: a README (problem, demo link/GIF, architecture diagram, results with numbers, how to run, limitations &amp; next steps), clean code in <code>src/</code>, tests, and a requirements/<code>pyproject</code> file. Notebooks are allowed only for exploration.</p>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Project</th>
+<th>Skills</th>
+<th>Data</th>
+<th>Tech</th>
+<th>Why it's CV-worthy</th>
+<th>Go beyond the tutorial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>E-commerce analytics deep-dive</strong> (end of Part 1)</td>
+<td>SQL, pandas, EDA, visualization, storytelling</td>
+<td>Brazilian E-Commerce (Olist) dataset on Kaggle</td>
+<td>PostgreSQL, pandas, Seaborn, Jupyter</td>
+<td>Shows you can turn raw data into business decisions — the base of every ML job</td>
+<td>Answer 10 real business questions (cohort retention, delivery delays vs reviews); write an executive summary; publish a short blog/LinkedIn post</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Customer churn predictor, served as an API</strong> (Stages 06–08)</td>
+<td>Feature engineering, pipelines, CV, metrics, threshold tuning, SHAP, FastAPI basics</td>
+<td>Telco Customer Churn (Kaggle)</td>
+<td>scikit-learn, XGBoost/LightGBM, SHAP, FastAPI, Gradio</td>
+<td>Classic ML interview topic, done end-to-end</td>
+<td>Choose the threshold by business cost (money saved), explain predictions with SHAP, add a <code>/predict</code> endpoint and a Gradio demo</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Custom image classifier / detector</strong> (Stage 10)</td>
+<td>Transfer learning, augmentation, error analysis, deployment</td>
+<td><strong>Your own collected images</strong> (e.g., local products, plant diseases, Egyptian dishes) or PlantVillage (Kaggle)</td>
+<td>PyTorch, torchvision or Ultralytics YOLO, Hugging Face Spaces</td>
+<td>Custom data proves you didn't copy a tutorial</td>
+<td>Collect &amp; label 500+ images yourself, show a confusion matrix + failure gallery, compare 2 backbones, quantize for speed</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Arabic text classifier (sentiment or topic)</strong> (Stage 11)</td>
+<td>Tokenization, baselines, fine-tuning transformers, evaluation</td>
+<td>Arabic sentiment datasets on the Hugging Face Hub, or Arabic reviews you collect</td>
+<td>Hugging Face <code>transformers</code>, an Arabic model (e.g., AraBERT) or multilingual model</td>
+<td>Arabic NLP is a real differentiator in the MENA market</td>
+<td>TF-IDF baseline vs fine-tuned model vs zero-shot LLM, with a cost/accuracy table; handle Egyptian dialect vs MSA</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>LLM structured-extraction service</strong> (Stages 12–13)</td>
+<td>Prompting, structured outputs, evals, FastAPI, Docker</td>
+<td>Job postings or CVs (your own + public postings), invoices, or news articles</td>
+<td>LLM API, Pydantic, FastAPI, Postgres, Docker</td>
+<td>Exactly what companies build first with LLMs</td>
+<td>50-example eval set with field-level accuracy, compare 2 models on quality/cost/latency, retries + validation, caching</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Bilingual RAG assistant with citations</strong> (Stages 14–15)</td>
+<td>Chunking, embeddings, hybrid search, reranking, RAG evals</td>
+<td>A real document set: your university regulations, Egyptian labor law, or an open-source project's docs</td>
+<td>pgvector or Chroma, Sentence-Transformers, FastAPI, Docker, a simple web UI</td>
+<td>The #1 most requested AI Engineer skill in 2026 job posts</td>
+<td>Golden Q&amp;A set, recall@k + faithfulness metrics, before/after improvements, refuses when unsure, Arabic + English questions</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Text-to-SQL data analyst agent</strong> (Stage 16)</td>
+<td>Tool calling, LangGraph, state, guardrails, human-in-the-loop, agent evals</td>
+<td>The Postgres DB from Project 1</td>
+<td>LLM API, LangGraph, Postgres (read-only user), FastAPI</td>
+<td>Combines SQL + LLMs + agents — very practical for businesses</td>
+<td>Read-only DB role, query validation, step limits, self-correction on SQL errors, chart generation, eval set of 40 questions with accuracy</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Production capstone</strong> (Stage 17) — take #6 or #7 to production (ML-track: take #2 to production with MLflow + retraining)</td>
+<td>CI/CD, cloud, monitoring, LLMOps/MLOps</td>
+<td>Same as base project</td>
+<td>GitHub Actions, Docker, one cloud, MLflow or tracing tool, logging</td>
+<td>Proves you can ship, not just prototype — the thing juniors usually lack</td>
+<td>Eval-in-CI, auth + rate limiting, cost dashboard, load test, architecture diagram, 2-minute demo video</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Optional 9–10 (if you have time):</strong> a Kaggle competition write-up, or an open-source contribution (docs fix or bug fix) to a library you used (scikit-learn, Hugging Face, LangGraph…).</p>
+<p><strong>Make projects impressive for recruiters:</strong>
+- Real or self-collected data &gt; the Titanic dataset.
+- A live demo link at the top of the README.
+- <strong>Numbers:</strong> "improved recall@5 from 0.62 to 0.81", "cut cost per request by 40%".
+- An architecture diagram and a "Decisions &amp; trade-offs" section.
+- Solve a problem a real person has. Bonus if someone actually uses it.</p>
+<hr />
+<h2 class="sec" id="jobs">Job strategy</h2>
+<h3 id="71-when-to-start-applying-before-you-finish">7.1 When to start applying (before you "finish")</h3>
+<ul>
+<li><strong>After Project #2 (~month 7–8):</strong> apply for <strong>ML/AI/Data internships</strong> and trainee programs.</li>
+<li><strong>After Project #5–#6 (~month 9–11):</strong> apply for <strong>junior AI Engineer / junior ML Engineer / AI developer / backend-with-AI</strong> roles.</li>
+<li>Apply even when you meet only ~60% of the requirements. Job descriptions are wish lists.</li>
+<li>Keep learning while applying: 70% learning/projects, 30% applications &amp; networking.</li>
+<li>In Egypt, look at LinkedIn Jobs and Wuzzuf, and check the current intake of free national programs (e.g., ITI and DEPI). Remote junior roles and freelance (small LLM automation projects) also count as experience.</li>
+</ul>
+<h3 id="72-what-ai-engineer-job-descriptions-typically-ask-for-2026">7.2 What AI Engineer job descriptions typically ask for (2026)</h3>
+<p><strong>Almost always:</strong> Python, Git, SQL, LLM APIs, prompt engineering, RAG, vector databases, FastAPI (or another backend framework), Docker, one cloud (AWS/Azure/GCP), ML fundamentals, communication.
+<strong>Often:</strong> PyTorch, Hugging Face, LangGraph/LangChain, evals &amp; observability, CI/CD, agents/tool calling, MCP.
+<strong>Sometimes / nice to have:</strong> fine-tuning (LoRA), Kubernetes, MLflow, data pipelines, frontend basics (React/Next.js).
+<strong>ML Engineer roles add:</strong> statistics, feature engineering, training pipelines, model monitoring, larger-scale data tools.</p>
+<h3 id="73-interview-preparation-4-pillars">7.3 Interview preparation (4 pillars)</h3>
+<ol>
+<li><strong>Coding:</strong> Python + DSA (NeetCode 150, easy/medium). Practice explaining out loud while coding.</li>
+<li><strong>ML/DL fundamentals:</strong> bias–variance, regularization, metrics, leakage, CV, gradient descent, backprop, CNNs, attention/transformers. Use Chip Huyen's ML Interviews book; turn your paper notes into flashcards.</li>
+<li><strong>AI system design:</strong> "Design a support chatbot for a bank", "Design RAG over 1M documents". Practice: requirements → architecture diagram → data → model choice → evals → latency/cost → guardrails → monitoring.</li>
+<li><strong>Project deep-dive &amp; behavioral:</strong> be able to talk 10 minutes about each project: why, trade-offs, what failed, numbers. Use STAR for behavioral questions.
+- Do mock interviews with friends weekly in the final month; record yourself.</li>
+</ol>
+<h3 id="74-github-profile">7.4 GitHub profile</h3>
+<ul>
+<li>Profile README: one-line headline, 4–6 pinned projects with one-line impact each, tech stack, links (LinkedIn, blog, demos).</li>
+<li>Consistent commits (your <code>learning-log</code> repo helps), meaningful commit messages.</li>
+<li>Each pinned repo: demo, diagram, results, tests, clean structure, no secrets, no 50 "test.ipynb" files.</li>
+</ul>
+<h3 id="75-cv-one-page">7.5 CV (one page)</h3>
+<ul>
+<li>Single-column, ATS-friendly, PDF. Order: Header → Summary (2 lines) → Projects → Experience/Internships → Skills → Education.</li>
+<li>Bullets in the form: <strong>"Did X using Y, achieving Z (number)."</strong> e.g., "Built a bilingual RAG assistant (FastAPI, pgvector, Docker) answering 300+ regulation questions; improved retrieval recall@5 from 0.62 to 0.81 with hybrid search and reranking."</li>
+<li>Group skills (Languages / ML &amp; DL / LLM &amp; GenAI / Backend &amp; MLOps / Data). Only list what you can be interviewed on.</li>
+<li>Tailor the top 3 bullets for each job type.</li>
+</ul>
+<h3 id="76-linkedin">7.6 LinkedIn</h3>
+<ul>
+<li>Headline: "AI Engineer | LLM apps, RAG &amp; Agents | Python, PyTorch, FastAPI" (not "Aspiring…").</li>
+<li>Featured section: your 3 best projects with demo links.</li>
+<li>Post weekly: what you built, a chart, a lesson learned. Learning in public attracts recruiters and turns your notes into content.</li>
+<li>Connect with engineers and recruiters at target companies; ask for advice and referrals, not "please hire me".</li>
+</ul>
+<h3 id="77-how-to-beat-candidates-who-only-have-certificates">7.7 How to beat candidates who only have certificates</h3>
+<p>Deployed demos · measured results · evaluation sets · clean READMEs · write-ups/blog posts · Arabic-language AI work · open-source contributions · real users. A certificate says "I watched it". A deployed, evaluated project says "I can do the job".</p>
+<hr />
+<h2 class="sec" id="schedule">Study schedule (2–3 hours/day)</h2>
+<h3 id="81-weekly-template-16-hweek">8.1 Weekly template (~16 h/week)</h3>
+<div class="scroll"><table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Block 1 (60–75 min)</th>
+<th>Block 2 (45–60 min)</th>
+<th>Block 3 (20–30 min)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sat</strong></td>
+<td><strong>Project day (3–4 h):</strong> build the current stage's project</td>
+<td>—</td>
+<td>Push to GitHub + update README</td>
+</tr>
+<tr>
+<td><strong>Sun</strong></td>
+<td>Theory: new topic + <strong>handwritten notes</strong></td>
+<td>Coding: implement what you learned</td>
+<td>1 DSA/SQL problem (paper first)</td>
+</tr>
+<tr>
+<td><strong>Mon</strong></td>
+<td>Theory continues + handwritten notes</td>
+<td>Coding exercises</td>
+<td>1 DSA/SQL problem</td>
+</tr>
+<tr>
+<td><strong>Tue</strong></td>
+<td>Coding: rebuild from blank file (no tutorial)</td>
+<td>Mini-project / extend exercise</td>
+<td>Revision: flashcards (+1 day, +1 week items)</td>
+</tr>
+<tr>
+<td><strong>Wed</strong></td>
+<td>Theory: new topic + handwritten notes</td>
+<td>Coding exercises</td>
+<td>1 DSA/SQL problem</td>
+</tr>
+<tr>
+<td><strong>Thu</strong></td>
+<td>Project work</td>
+<td>Project work</td>
+<td>Write weekly summary in <code>learning-log</code></td>
+</tr>
+<tr>
+<td><strong>Fri</strong></td>
+<td><strong>Rest</strong> (or light: 30 min revision of the week's paper notes)</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>Adjust the weekend to your own (e.g., Fri/Sat project day). Per week this gives roughly: theory ~4 h, coding ~5 h, projects ~5 h, problem-solving ~1.5 h, revision &amp; notes ~1.5 h.</p>
+<h3 id="82-one-study-session-150-min">8.2 One study session (≈150 min)</h3>
+<ol>
+<li><strong>Recall (10 min):</strong> on a blank page, write what you remember from last session. No looking. Then check your notes.</li>
+<li><strong>Learn (35–40 min):</strong> one focused chunk of the primary resource. Pause often; handwritten notes for concepts, diagrams, math.</li>
+<li><strong>Do (60 min):</strong> close the video. Code it yourself, then extend it (new data, new requirement).</li>
+<li><strong>Problem (20 min):</strong> one DSA or SQL problem, or one math exercise in Stage 03.</li>
+<li><strong>Log (10–15 min):</strong> 5-line summary in <code>learning-log</code>, commit, write tomorrow's first task. End mid-task if possible — it makes starting tomorrow easier.
+Use 50/10 focus/break cycles, phone in another room.</li>
+</ol>
+<h3 id="83-monthly">8.3 Monthly</h3>
+<ul>
+<li>Last week of each month: <strong>revision week-lite</strong> — redo 3 old exercises from scratch, re-explain 5 concepts aloud, clean up one project's README.</li>
+</ul>
+<hr />
+<h2 class="sec" id="notes">Final honest notes</h2>
+<ul>
+<li>The roadmap is long because the job is real. Consistency beats intensity: 2.5 h every day &gt; 12 h on Fridays.</li>
+<li>You will forget things. That's normal. That's why the revision and the learning log exist.</li>
+<li>Don't wait to feel "ready". Ship projects, post your progress, and apply early.</li>
+<li>AI tools change every few months. Fundamentals (Python, data, ML, evaluation, backend, deployment) do not. That's why the order is what it is.</li>
+</ul>
+   <h2 class="sec" id="series">The three TikTok backgrounds</h2>
+   <p>The same roadmap as three 9:16 infographics, one per part.</p>
+   <div class="gal">
+    <figure><img src="images/part1.png" alt="Part 1 infographic: Foundations, stages 01 to 05"><figcaption>Part 1 · Foundations</figcaption></figure>
+    <figure><img src="images/part2.png" alt="Part 2 infographic: AI Core, stages 06 to 11"><figcaption>Part 2 · AI core</figcaption></figure>
+    <figure><img src="images/part3.png" alt="Part 3 infographic: AI Engineering and Job Ready, stages 12 to 18"><figcaption>Part 3 · AI engineering &amp; job ready</figcaption></figure>
+   </div>
+  </main>
+ </div>
+</div>
+<footer class="band"><div class="wrap">Resource links checked November 2026. Courses and docs move; if a link breaks, search the resource name.</div></footer>
+<script>
+{
+  // Wrap the project table so it can be wider than the column and scroll sideways.
+  const h = document.getElementById('projects');
+  let n = h && h.nextElementSibling;
+  while (n && !n.classList.contains('scroll')) n = n.nextElementSibling;
+  if (n) n.classList.add('projects');
+}
+</script>
+</body>
+</html>
